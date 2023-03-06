@@ -235,19 +235,19 @@ try {
 
 
 
-### sendBitcoin (todo)
+### sendBitcoin
 
 ```typescript
-unisat.sendBitcoin(options)
+unisat.sendBitcoin(toAddress, satoshis)
 ```
 
 Send BTC
 
 #### Parameters
 
-* `options` - `Object`:
-    - `receivers` - `{address : string, satoshis : number}[]`:  bitcoin receivers
-    - `broadcast` - `boolean`: (Optional) whether not to broadcast the transaction, the default is true
+* `toAddress` - `string`: the address to send
+* `satoshis` - `number`: the satoshis to send
+
 
 #### Returns
 
@@ -257,14 +257,7 @@ Send BTC
 
 ```typescript
 try {
-  let txid = await window.unisat.sendBitcoin({
-    receivers:[
-      {
-        address:"tb1qrn7tvhdf6wnh790384ahj56u0xaa0kqgautnnz",
-        satoshis:1000
-      }
-    ]
-  });
+  let txid = await window.unisat.sendBitcoin("tb1qrn7tvhdf6wnh790384ahj56u0xaa0kqgautnnz",1000);
   console.log(txid)
 } catch (e) {
   console.log(e);
