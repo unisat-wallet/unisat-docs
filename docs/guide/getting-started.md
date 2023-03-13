@@ -35,5 +35,11 @@ We recommend that you provide a button to allow the user to connect Unisat Walle
 Clicking this button should call the following method:
 
 ```javascript
-unisat.connect()
+unisat.requestAccounts()
 ```
+
+### Demo 
+
+- [Online Demo](https://demo.unisat.io)
+- [Demo source code](https://github.com/unisat-wallet/unisat-web3-demo) 
+

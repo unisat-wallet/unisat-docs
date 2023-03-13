@@ -455,6 +455,7 @@ try {
 
 ```typescript
 unisat.on('accountsChanged', handler: (accounts: Array<string>) => void);
+unisat.removeListener('accountsChanged', handler: (accounts: Array<string>) => void);
 ```
 
 The `accountsChanged` will be emitted whenever the user's exposed account address changes.
@@ -465,6 +466,7 @@ The `accountsChanged` will be emitted whenever the user's exposed account addres
 
 ```typescript
 unisat.on('networkChanged', handler: (network: string) => void);
+unisat.removeListener('networkChanged', handler: (network: string) => void);
 ```
 
 The `networkChanged` will be emitted whenever the user's network changes.
