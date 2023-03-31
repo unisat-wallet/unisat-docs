@@ -1,4 +1,4 @@
-# Unisat Wallet API
+# UniSat Wallet API
 
 ## Table of Contents
 

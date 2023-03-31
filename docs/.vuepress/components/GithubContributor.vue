@@ -37,7 +37,7 @@ export default {
     };
   },
   mounted() {
-    fetch(`https://api.github.com/repos/Unisat/${this.repoName}/contributors`)
+    fetch(`https://api.github.com/repos/unisat/${this.repoName}/contributors`)
       .then((response) => response.json())
       .then((data) => {
         this.contributorList = data;
