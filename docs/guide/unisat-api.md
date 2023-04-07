@@ -194,13 +194,13 @@ try {
   }
 ```
 
-### getInscriptions (todo)
+### getInscriptions
 
 ```typescript
-unisat.getInscriptions()
+unisat.getInscriptions(cursor,size)
 ```
 
-Get Inscriptions (Max to 100)
+List inscriptions of current account
 
 #### Parameters
 
@@ -208,29 +208,52 @@ none
 
 #### Returns
 
-* `Promise` - `Object[]`: 
-   * ` id ` - ` string ` : the id of inscription.
-   * ` num ` - ` string ` : the number of inscription.
+* `Promise` - `Object`: 
+  * ` total ` - `number` : the total count
+  * ` list ` - `Object[]` :
+   * ` inscriptionId ` - ` string ` : the id of inscription.
+   * ` inscriptionNumber ` - ` string ` : the number of inscription.
    * ` address ` - ` string ` : the address of inscription.
+   * ` outputValue ` - ` string ` : the output value of inscription.
    * ` content ` - ` string ` : the content url of inscription.
-   * ` content_length` - ` string ` : the content length of inscription.
-   * ` content_type ` - ` number ` : the content type of inscription.
+   * ` contentLength` - ` string ` : the content length of inscription.
+   * ` contentType ` - ` number ` : the content type of inscription.
    * ` preview ` - ` number ` : the preview link
-   * ` timestamp ` - ` number ` : the timestamp of inscription.
+   * ` timestamp ` - ` number ` : the blocktime of inscription.
+   * ` offset ` - ` number ` : the offset of inscription.
+   * ` genesisTransaction ` - ` string ` : the txid of genesis transaction
+   * ` location ` - ` string ` : the txid and vout of current location 
 
 #### Example
 
 ```typescript
 try {
-  let res = await window.unisat.getInscriptions();
+  let res = await window.unisat.getInscriptions(0,10);
   console.log(res)
 } catch (e) {
   console.log(e);
 }
 
-> [
-  ...
-]
+> {
+  "total":10,
+  "list":[
+    {
+      inscriptionId: '6037b17df2f48cf87f6b6e6ff89af416f6f21dd3d3bc9f1832fb1ff560037531i0',
+      inscriptionNumber: 959941,
+      address: 'bc1q8h8s4zd9y0lkrx334aqnj4ykqs220ss735a3gh',
+      outputValue: 546,
+      preview: 'https://ordinals.com/preview/6037b17df2f48cf87f6b6e6ff89af416f6f21dd3d3bc9f1832fb1ff560037531i0',
+      content: 'https://ordinals.com/content/6037b17df2f48cf87f6b6e6ff89af416f6f21dd3d3bc9f1832fb1ff560037531i0',
+      contentLength: 53,
+      contentType: 'text/plain;charset=utf-8',
+      timestamp: 1680865285,
+      genesisTransaction: '6037b17df2f48cf87f6b6e6ff89af416f6f21dd3d3bc9f1832fb1ff560037531',
+      location: '6037b17df2f48cf87f6b6e6ff89af416f6f21dd3d3bc9f1832fb1ff560037531:0:0',
+      output: '6037b17df2f48cf87f6b6e6ff89af416f6f21dd3d3bc9f1832fb1ff560037531:0',
+      offset: 0
+    }
+  ]
+}
 ```
 
 
@@ -238,7 +261,7 @@ try {
 ### sendBitcoin
 
 ```typescript
-unisat.sendBitcoin(toAddress, satoshis)
+unisat.sendBitcoin(toAddress, satoshis, options)
 ```
 
 Send BTC
@@ -247,7 +270,8 @@ Send BTC
 
 * `toAddress` - `string`: the address to send
 * `satoshis` - `number`: the satoshis to send
-
+* `options` - `object`: 
+  - `feeRate` - `number`: the network fee rate 
 
 #### Returns
 
@@ -264,10 +288,10 @@ try {
 }
 ```
 
-### sendInscription (todo)
+### sendInscription
 
 ```typescript
-unisat.sendInscription(options)
+unisat.sendInscription(address, inscriptionId, options)
 ```
 
 Send Inscription
@@ -287,10 +311,7 @@ Send Inscription
 
 ```typescript
 try {
-  let {txid} = await window.unisat.sendInscription({
-    id:"e9b86a063d78cc8a1ed17d291703bcc95bcd521e087ab0c7f1621c9c607def1ai0",
-    address:"tb1q8h8s4zd9y0lkrx334aqnj4ykqs220ss7mjxzny"
-  });
+  let {txid} = await window.unisat.sendInscription("tb1q8h8s4zd9y0lkrx334aqnj4ykqs220ss7mjxzny","e9b86a063d78cc8a1ed17d291703bcc95bcd521e087ab0c7f1621c9c607def1ai0");
   console.log("send Inscription 204 to tb1q8h8s4zd9y0lkrx334aqnj4ykqs220ss7mjxzny",{txid})
 } catch (e) {
   console.log(e);
@@ -324,41 +345,6 @@ try {
 }
 
 > IMEo3yzgqJKlmc38IqlP3YjadVOnXmVR6fqeDhtVdiyHUbitYlO2CFUHUgGtM1/cjWsWoGVhTv6pyvj9L/kNT5A=
-```
-
-### signTx (todo)
-
-```typescript
-unisat.signTx(txHex, inputInfos)
-```
-
-Sign transaction
-
-#### Parameters
-
-* `txHex` - `string`: the hex raw transaction to sign
-* `inputInfos` - `Object[]`: the inputs to sign
-  + `inputIndex` - `number`: the index of input 
-  + `scriptHex` - `string`: the previous output script of input 
-  + `satoshis` - `number`: the previous output satoshis of input
-  + `sighashType` - `number`: the sighash type
-  + `address` - `number|string`: the address of account
-
-#### Returns
-
-* `Promise` - `SigResult[]`: 
-  + `sig` - `string`: the signature 
-  + `publicKey` - `string`: the publicKey of account
-
-#### Example
-
-```typescript
-try {
-  let res = await window.unisat.signTx("",[]);
-  console.log(res)
-} catch (e) {
-  console.log(e);
-}
 ```
 
 ### pushTx
